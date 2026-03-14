@@ -1,0 +1,1520 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Parti Pirate Vaud – HTTPS</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+      :root {
+        --pp-orange: #f6921e;
+        --pp-yellow: #ffcb00;
+        --pp-red: #d81b60;
+        --pp-purple: #4a2b71;
+        --pp-blue: #005c99;
+        --pp-dark: #111111;
+        --pp-light: #f7f7f9;
+        --pp-white: #ffffff;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          sans-serif;
+        color: #222222;
+        background-color: var(--pp-white);
+        line-height: 1.6;
+      }
+
+      a {
+        color: var(--pp-purple);
+        text-decoration: none;
+      }
+
+      a:hover {
+        text-decoration: underline;
+      }
+
+      img {
+        max-width: 100%;
+        height: auto;
+        display: block;
+      }
+
+      /* Layout helpers */
+      .container {
+        width: 100%;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+      }
+
+      .section {
+        padding: 70px 0;
+      }
+
+      .section--alt {
+        background: var(--pp-light);
+      }
+
+      .section-title {
+        font-size: 32px;
+        margin-bottom: 10px;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+      }
+
+      .section-subtitle {
+        max-width: 720px;
+        font-size: 16px;
+        color: #555555;
+        margin-bottom: 32px;
+      }
+
+      /* Header */
+      .top-strip {
+        background: var(--pp-teal, #00a79d);
+        color: var(--pp-white);
+        text-align: center;
+        font-size: 13px;
+        padding: 6px 12px;
+      }
+
+      .top-strip a {
+        color: var(--pp-white);
+        font-weight: 600;
+      }
+
+      .header {
+        position: sticky;
+        top: 0;
+        z-index: 999;
+        background: rgba(255, 255, 255, 0.98);
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+        backdrop-filter: blur(6px);
+      }
+
+      .header-inner {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 14px 20px;
+      }
+
+      .logo {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .logo-mark {
+        width: 40px;
+        height: 40px;
+        border-radius: 8px;
+        background: var(--pp-orange);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--pp-white);
+        font-weight: 700;
+        font-size: 22px;
+      }
+
+      .logo-text {
+        font-weight: 700;
+        font-size: 18px;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+      }
+
+      .nav {
+        display: flex;
+        align-items: center;
+        gap: 24px;
+        font-size: 14px;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+      }
+
+      .nav a {
+        color: #444444;
+        padding-bottom: 4px;
+        border-bottom: 2px solid transparent;
+      }
+
+      .nav a:hover,
+      .nav a.is-active {
+        border-bottom-color: var(--pp-orange);
+        text-decoration: none;
+      }
+
+      .nav-cta {
+        padding: 8px 18px;
+        border-radius: 999px;
+        background: var(--pp-purple);
+        color: var(--pp-white) !important;
+        font-weight: 600;
+        border: none;
+      }
+
+      .nav-toggle {
+        display: none;
+        width: 26px;
+        height: 20px;
+        flex-direction: column;
+        justify-content: space-between;
+        cursor: pointer;
+      }
+
+      .nav-toggle span {
+        display: block;
+        height: 2px;
+        background: #222222;
+      }
+
+      /* Hero */
+      .hero {
+        position: relative;
+        overflow: hidden;
+        background: linear-gradient(135deg, var(--pp-orange), var(--pp-yellow));
+        color: var(--pp-white);
+      }
+
+      .hero-inner {
+        display: grid;
+        grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+        gap: 40px;
+        align-items: center;
+        padding: 80px 20px 70px;
+      }
+
+      .hero-kicker {
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 0.15em;
+        margin-bottom: 8px;
+      }
+
+      .hero-title {
+        font-size: 40px;
+        line-height: 1.1;
+        margin-bottom: 14px;
+        max-width: 540px;
+      }
+
+      .hero-subtitle {
+        font-size: 16px;
+        max-width: 540px;
+        margin-bottom: 24px;
+      }
+
+      .hero-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-bottom: 20px;
+      }
+
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 999px;
+        padding: 11px 22px;
+        font-size: 14px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        border: none;
+        cursor: pointer;
+        transition: transform 0.1s ease, box-shadow 0.1s ease, background 0.15s;
+        text-decoration: none;
+      }
+
+      .btn-primary {
+        background: var(--pp-dark);
+        color: var(--pp-white);
+        box-shadow: 0 8px 18px rgba(0, 0, 0, 0.25);
+      }
+
+      .btn-primary:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 10px 24px rgba(0, 0, 0, 0.35);
+      }
+
+      .btn-outline {
+        background: transparent;
+        color: var(--pp-dark);
+        border: 2px solid rgba(0, 0, 0, 0.25);
+      }
+
+      .btn-outline:hover {
+        background: rgba(0, 0, 0, 0.1);
+      }
+
+      .hero-meta {
+        font-size: 13px;
+        opacity: 0.9;
+      }
+
+      .hero-badges {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 20px;
+      }
+
+      .hero-badge {
+        padding: 6px 10px;
+        border-radius: 999px;
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        border: 1px solid rgba(255, 255, 255, 0.7);
+        background: rgba(0, 0, 0, 0.1);
+      }
+
+      .hero-image {
+        position: relative;
+      }
+
+      .hero-photo {
+        border-radius: 24px;
+        overflow: hidden;
+        border: 4px solid rgba(255, 255, 255, 0.9);
+        box-shadow: 0 18px 40px rgba(0, 0, 0, 0.35);
+      }
+
+      .hero-sticker {
+        position: absolute;
+        left: -10px;
+        bottom: -18px;
+        background: var(--pp-purple);
+        color: var(--pp-white);
+        padding: 10px 14px;
+        border-radius: 14px;
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 0.14em;
+        box-shadow: 0 6px 14px rgba(0, 0, 0, 0.3);
+      }
+
+      .hero-event-card {
+        position: absolute;
+        right: -10px;
+        top: 16px;
+        background: var(--pp-white);
+        color: #222222;
+        border-radius: 14px;
+        padding: 12px 16px;
+        width: 220px;
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+        font-size: 13px;
+      }
+
+      .hero-event-title {
+        font-weight: 700;
+        margin-bottom: 4px;
+      }
+
+      .hero-event-meta {
+        font-size: 12px;
+        color: #777777;
+        margin-bottom: 8px;
+      }
+
+      .hero-event-date {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 13px;
+        font-weight: 600;
+      }
+
+      .hero-event-date span {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 32px;
+        height: 32px;
+        border-radius: 8px;
+        background: var(--pp-orange);
+        color: var(--pp-white);
+        font-size: 15px;
+      }
+
+      /* About */
+      .about-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+        gap: 40px;
+        align-items: center;
+      }
+
+      .pill-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-bottom: 18px;
+      }
+
+      .pill {
+        padding: 6px 12px;
+        border-radius: 999px;
+        background: rgba(74, 43, 113, 0.08);
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        color: #444444;
+      }
+
+      .icon-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        margin-top: 16px;
+        font-size: 13px;
+        color: #666666;
+      }
+
+      .icon-row-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .icon-circle {
+        width: 30px;
+        height: 30px;
+        border-radius: 999px;
+        background: var(--pp-yellow);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 14px;
+        font-weight: 700;
+        color: #333333;
+      }
+
+      /* Program */
+      .program-tabs {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-bottom: 24px;
+      }
+
+      .program-tab {
+        padding: 8px 14px;
+        border-radius: 999px;
+        font-size: 13px;
+        border: 1px solid #dddddd;
+        cursor: pointer;
+        background: #ffffff;
+      }
+
+      .program-tab.is-active {
+        background: var(--pp-purple);
+        color: #ffffff;
+        border-color: var(--pp-purple);
+      }
+
+      .program-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 24px;
+      }
+
+      .program-card {
+        background: #ffffff;
+        border-radius: 16px;
+        padding: 22px 20px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+        border-top: 4px solid var(--pp-orange);
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      .program-card--company {
+        border-top-color: var(--pp-red);
+      }
+
+      .program-card--digital2 {
+        border-top-color: var(--pp-blue);
+      }
+
+      .program-card-title {
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        font-size: 13px;
+        color: #555555;
+      }
+
+      .program-card-heading {
+        font-size: 17px;
+        font-weight: 700;
+      }
+
+      .program-card-footer {
+        margin-top: auto;
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        color: #777777;
+      }
+
+      /* Candidates */
+      .candidates-hero {
+        margin-bottom: 32px;
+        padding: 18px 20px;
+        border-radius: 18px;
+        background: linear-gradient(135deg, var(--pp-purple), var(--pp-orange));
+        color: #ffffff;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: 14px;
+        align-items: center;
+      }
+
+      .candidates-hero strong {
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        font-size: 12px;
+      }
+
+      .candidates-hero span {
+        font-size: 13px;
+      }
+
+      .candidates-grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 22px;
+      }
+
+      .candidate-card {
+        background: #ffffff;
+        border-radius: 18px;
+        overflow: hidden;
+        box-shadow: 0 10px 22px rgba(0, 0, 0, 0.08);
+        display: flex;
+        flex-direction: column;
+      }
+
+      .candidate-photo {
+        position: relative;
+        height: 180px;
+        background: #dddddd;
+        overflow: hidden;
+      }
+
+      .candidate-label {
+        position: absolute;
+        left: 12px;
+        bottom: 12px;
+        background: var(--pp-orange);
+        color: #ffffff;
+        padding: 6px 10px;
+        border-radius: 999px;
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+      }
+
+      .candidate-body {
+        padding: 14px 14px 16px;
+        font-size: 14px;
+      }
+
+      .candidate-name {
+        font-weight: 700;
+        margin-bottom: 4px;
+      }
+
+      .candidate-meta {
+        font-size: 12px;
+        color: #777777;
+        margin-bottom: 8px;
+      }
+
+      .candidate-links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 6px;
+      }
+
+      .tag {
+        padding: 4px 9px;
+        border-radius: 999px;
+        background: rgba(74, 43, 113, 0.06);
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        color: #555555;
+      }
+
+      /* Events and actions */
+      .actions-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+        gap: 40px;
+        align-items: flex-start;
+      }
+
+      .event-list {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .event-item {
+        padding: 14px 16px;
+        border-radius: 14px;
+        border: 1px solid #eeeeee;
+        display: grid;
+        grid-template-columns: 60px minmax(0, 1fr) auto;
+        gap: 16px;
+        align-items: center;
+        background: #ffffff;
+      }
+
+      .event-date-box {
+        text-align: center;
+        border-radius: 12px;
+        border: 1px solid #f0f0f0;
+        padding: 6px 4px;
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+      }
+
+      .event-date-box strong {
+        display: block;
+        font-size: 18px;
+      }
+
+      .event-content-title {
+        font-weight: 600;
+        font-size: 14px;
+        margin-bottom: 3px;
+      }
+
+      .event-content-meta {
+        font-size: 12px;
+        color: #777777;
+      }
+
+      .event-cta a {
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        font-weight: 600;
+      }
+
+      .actions-cards {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 12px;
+      }
+
+      .action-card {
+        border-radius: 16px;
+        padding: 16px 18px;
+        background: #ffffff;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.04);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 14px;
+      }
+
+      .action-card-title {
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.14em;
+        font-size: 12px;
+        margin-bottom: 4px;
+      }
+
+      .action-card-text {
+        font-size: 13px;
+        color: #666666;
+      }
+
+      .action-card .btn {
+        font-size: 11px;
+        padding: 8px 14px;
+      }
+
+      /* Join / Become a pirate */
+      .join-section {
+        position: relative;
+        overflow: hidden;
+        background: radial-gradient(circle at top left, #ffe47a, #f6921e);
+        color: #222222;
+      }
+
+      .join-inner {
+        display: grid;
+        grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+        gap: 40px;
+        align-items: center;
+      }
+
+      .join-icons {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 12px;
+        margin-top: 20px;
+      }
+
+      .join-icon-card {
+        background: rgba(255, 255, 255, 0.9);
+        border-radius: 16px;
+        padding: 14px 12px;
+        text-align: center;
+        font-size: 12px;
+        box-shadow: 0 8px 18px rgba(0, 0, 0, 0.06);
+      }
+
+      .join-icon-card strong {
+        display: block;
+        margin-bottom: 4px;
+        font-size: 13px;
+      }
+
+      /* Contact */
+      .contact-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+        gap: 40px;
+        align-items: center;
+      }
+
+      .contact-card {
+        background: #ffffff;
+        border-radius: 18px;
+        padding: 20px 22px;
+        box-shadow: 0 10px 24px rgba(0, 0, 0, 0.06);
+      }
+
+      .form-row {
+        display: flex;
+        gap: 14px;
+        flex-wrap: wrap;
+        margin-bottom: 12px;
+      }
+
+      .form-field {
+        flex: 1 1 180px;
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        font-size: 14px;
+      }
+
+      .form-field label {
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 0.14em;
+        color: #777777;
+      }
+
+      .form-field input,
+      .form-field textarea {
+        border-radius: 10px;
+        border: 1px solid #dddddd;
+        padding: 9px 10px;
+        font-size: 14px;
+        font-family: inherit;
+        resize: vertical;
+      }
+
+      .form-footnote {
+        font-size: 11px;
+        color: #888888;
+        margin-top: 6px;
+      }
+
+      /* Footer */
+      .footer {
+        background: #0b0613;
+        color: #cccccc;
+        padding: 40px 0 24px;
+        font-size: 13px;
+      }
+
+      .footer-top {
+        display: grid;
+        grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr) minmax(0, 1.1fr);
+        gap: 32px;
+        margin-bottom: 30px;
+      }
+
+      .footer-title {
+        font-size: 13px;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        color: #f5f5f5;
+        margin-bottom: 12px;
+      }
+
+      .footer a {
+        color: #f0f0f0;
+      }
+
+      .footer-contact p,
+      .footer-donation p {
+        margin: 0 0 6px;
+      }
+
+      .footer-qr {
+        width: 120px;
+        height: 120px;
+        background: #ffffff;
+        border-radius: 10px;
+      }
+
+      .footer-bottom {
+        border-top: 1px solid rgba(255, 255, 255, 0.08);
+        padding-top: 16px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: 10px;
+        font-size: 11px;
+        color: #aaaaaa;
+      }
+
+      .footer-links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      /* Responsive */
+      @media (max-width: 960px) {
+        .hero-inner,
+        .about-grid,
+        .actions-grid,
+        .join-inner,
+        .contact-grid {
+          grid-template-columns: 1fr;
+        }
+        .hero-inner {
+          padding-top: 70px;
+        }
+        .hero-image {
+          order: -1;
+          max-width: 420px;
+          margin: 0 auto 10px;
+        }
+        .candidates-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+        .program-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+        .footer-top {
+          grid-template-columns: 1fr;
+        }
+        .nav {
+          position: absolute;
+          inset: 100% 0 auto;
+          background: #ffffff;
+          flex-direction: column;
+          padding: 12px 20px 18px;
+          border-bottom: 1px solid #eeeeee;
+          display: none;
+        }
+        .nav.is-open {
+          display: flex;
+        }
+        .nav-toggle {
+          display: flex;
+        }
+      }
+
+      @media (max-width: 640px) {
+        .hero-title {
+          font-size: 30px;
+        }
+        .section {
+          padding: 52px 0;
+        }
+        .candidates-grid,
+        .program-grid,
+        .join-icons {
+          grid-template-columns: 1fr;
+        }
+        .event-item {
+          grid-template-columns: 50px minmax(0, 1fr);
+          grid-template-rows: auto auto;
+        }
+        .event-cta {
+          grid-column: 2 / -1;
+          margin-top: 6px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Top announcement -->
+    <div class="top-strip">
+      Le Parti Pirate Vaud devient le parti <strong>HTTPS</strong> – découvrez
+      notre programme et nos candidats.
+    </div>
+
+    <!-- Header -->
+    <header class="header">
+      <div class="header-inner container">
+        <a href="#top" class="logo">
+          <div class="logo-mark">://</div>
+          <div class="logo-text">Parti Pirate Vaud</div>
+        </a>
+
+        <nav class="nav" id="mainNav">
+          <a href="#program" class="is-active">Programme</a>
+          <a href="#candidates">Candidats</a>
+          <a href="#events">Événements</a>
+          <a href="#join">Adhérer</a>
+          <a href="#contact">Contact</a>
+          <a href="#donation" class="nav-cta">Faire un don</a>
+        </nav>
+
+        <button class="nav-toggle" aria-label="Menu" id="navToggle">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Hero -->
+    <section class="hero" id="top">
+      <div class="container hero-inner">
+        <div>
+          <div class="hero-kicker">ÉLECTIONS – VAUD</div>
+          <h1 class="hero-title">
+            Humanisme, transparence, technologie : le parti
+            <span style="white-space: nowrap">HTTPS</span> pour un numérique au
+            service de toutes et tous.
+          </h1>
+          <p class="hero-subtitle">
+            Rejoignez les Pirates vaudois qui s’engagent pour des droits
+            numériques forts, une démocratie ouverte et une technologie
+            transparente.
+          </p>
+
+          <div class="hero-actions">
+            <a href="#join" class="btn btn-primary">Devenir pirate</a>
+            <a href="#candidates" class="btn btn-outline">Voir les candidats</a>
+            <a href="#program" class="btn btn-outline">Lire le programme</a>
+          </div>
+
+          <div class="hero-meta">
+            Prochaine votation, initiatives cantonales et campagnes fédérales :
+            découvrez comment participer dès maintenant.
+          </div>
+
+          <div class="hero-badges">
+            <span class="hero-badge">Humanisme</span>
+            <span class="hero-badge">Transparence</span>
+            <span class="hero-badge">Technologie</span>
+            <span class="hero-badge">Participation</span>
+          </div>
+        </div>
+
+        <div class="hero-image">
+          <div class="hero-photo">
+            <!-- Replace with campaign group photo -->
+            <img
+              src="https://images.pexels.com/photos/1181396/pexels-photo-1181396.jpeg?auto=compress&cs=tinysrgb&w=800"
+              alt="Équipe du Parti Pirate Vaud"
+            />
+          </div>
+
+          <div class="hero-sticker">
+            HTTPS – la nouvelle identité du Parti Pirate Vaud
+          </div>
+
+          <div class="hero-event-card">
+            <div class="hero-event-title">Prochain événement</div>
+            <div class="hero-event-meta">Réunion du comité – Lausanne</div>
+            <div class="hero-event-date"><span>19</span> mars, 19h30</div>
+            <div style="margin-top: 10px; font-size: 12px">
+              Rejoignez-nous à l’Open Forum pour discuter de surveillance,
+              libertés numériques et initiatives cantonales.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- About -->
+    <section class="section section--alt" id="about">
+      <div class="container about-grid">
+        <div>
+          <h2 class="section-title">Pourquoi le parti HTTPS ?</h2>
+          <p class="section-subtitle">
+            Le Parti Pirate Vaud s’engage pour une société numérique fondée sur
+            l’humanisme, la transparence, la technologie et la solidarité. HTTPS
+            est notre nouvelle bannière pour des droits numériques renforcés, un
+            État ouvert et une participation citoyenne réelle.
+          </p>
+          <div class="pill-row">
+            <span class="pill">Humanisme</span>
+            <span class="pill">Transparence</span>
+            <span class="pill">Technologie</span>
+            <span class="pill">Participation</span>
+            <span class="pill">Solidarité</span>
+          </div>
+          <p>
+            Que ce soit pour la protection de votre vie privée, la neutralité du
+            réseau ou un accès équitable aux données publiques, les Pirates
+            proposent des solutions concrètes au niveau communal, cantonal et
+            fédéral.
+          </p>
+          <div class="icon-row">
+            <div class="icon-row-item">
+              <div class="icon-circle">01</div>
+              <div>
+                Programmes municipaux et cantonaux construits avec la base.
+              </div>
+            </div>
+            <div class="icon-row-item">
+              <div class="icon-circle">02</div>
+              <div>
+                Participation ouverte : comités, forums, groupes de travail.
+              </div>
+            </div>
+            <div class="icon-row-item">
+              <div class="icon-circle">03</div>
+              <div>Actions concrètes contre la surveillance de masse.</div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <!-- Replace with campaign visual / illustration -->
+          <img
+            src="https://images.pexels.com/photos/1181547/pexels-photo-1181547.jpeg?auto=compress&cs=tinysrgb&w=800"
+            alt="Campagne du Parti Pirate"
+            style="
+              border-radius: 20px;
+              box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+            "
+          />
+        </div>
+      </div>
+    </section>
+
+    <!-- Program -->
+    <section class="section" id="program">
+      <div class="container">
+        <h2 class="section-title">Programme Pirate</h2>
+        <p class="section-subtitle">
+          Le programme vaudois s’articule autour du numérique dans la vie
+          quotidienne, de l’économie et de la démocratie. Découvrez les grandes
+          lignes des positions pirates et les mesures concrètes proposées.
+        </p>
+
+        <div class="program-tabs">
+          <button type="button" class="program-tab is-active">
+            Numérique au quotidien
+          </button>
+          <button type="button" class="program-tab">
+            Économie &amp; entreprises
+          </button>
+          <button type="button" class="program-tab">
+            Données &amp; souveraineté
+          </button>
+        </div>
+
+        <div class="program-grid">
+          <article class="program-card">
+            <div class="program-card-title">Digital</div>
+            <div class="program-card-heading">
+              Technologie au service de la vie quotidienne
+            </div>
+            <p>
+              Encadrement de la surveillance, transparence des algorithmes
+              publics, logiciels libres dans l’administration, accès abordable à
+              Internet pour toutes et tous.
+            </p>
+            <div class="program-card-footer">
+              Neutralité, ouverture, souveraineté numérique
+            </div>
+          </article>
+
+          <article class="program-card program-card--company">
+            <div class="program-card-title">Entreprise</div>
+            <div class="program-card-heading">
+              Innovation et fiscalité des données
+            </div>
+            <p>
+              Soutien aux PME innovantes, protection contre les monopoles
+              numériques, meilleure taxation des grandes plateformes exploitant
+              les données en Suisse.
+            </p>
+            <div class="program-card-footer">Économie numérique juste</div>
+          </article>
+
+          <article class="program-card program-card--digital2">
+            <div class="program-card-title">Démocratie</div>
+            <div class="program-card-heading">
+              Participation et transparence politique
+            </div>
+            <p>
+              Open data, consultation en ligne, transparence du financement des
+              campagnes et outils numériques pour faciliter l’engagement
+              citoyen.
+            </p>
+            <div class="program-card-footer">
+              Participation citoyenne renforcée
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Candidates -->
+    <section class="section section--alt" id="candidates">
+      <div class="container">
+        <h2 class="section-title">Nos candidat·e·s</h2>
+        <p class="section-subtitle">
+          Découvrez les membres vaudois qui portent les couleurs du parti HTTPS
+          lors des prochaines élections communales, cantonales et fédérales.
+        </p>
+
+        <div class="candidates-hero">
+          <div>
+            <strong>Liste 1 – Parti Pirate</strong><br />
+            <span
+              >Des profils variés, un même engagement : défendre vos droits
+              numériques et votre vie privée.</span
+            >
+          </div>
+          <div>
+            <a href="#newsletter" class="btn btn-outline"
+              >Recevoir le flyer &amp; programme</a
+            >
+          </div>
+        </div>
+
+        <div class="candidates-grid">
+          <!-- Candidate 1: Arnaud Durand (featured) -->
+          <article class="candidate-card">
+            <div class="candidate-photo">
+              <img
+                src="https://images.pexels.com/photos/2379005/pexels-photo-2379005.jpeg?auto=compress&cs=tinysrgb&w=800"
+                alt="Arnaud Durand"
+              />
+              <div class="candidate-label">Tête de liste</div>
+            </div>
+            <div class="candidate-body">
+              <div class="candidate-name">Arnaud Durand</div>
+              <div class="candidate-meta">
+                Élections communales 2024 – Liste 1
+              </div>
+              <p>
+                Défenseur de la transparence et de la souveraineté numérique,
+                engagé contre la surveillance de masse.
+              </p>
+              <div class="candidate-links">
+                <span class="tag">Programme complet</span>
+                <span class="tag">Flyer de campagne</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- Other candidates: replace with real names/photos -->
+          <article class="candidate-card">
+            <div class="candidate-photo">
+              <img
+                src="https://images.pexels.com/photos/1181686/pexels-photo-1181686.jpeg?auto=compress&cs=tinysrgb&w=800"
+                alt="Candidate"
+              />
+            </div>
+            <div class="candidate-body">
+              <div class="candidate-name">Candidate 2</div>
+              <div class="candidate-meta">Élections cantonales</div>
+              <p>
+                Spécialiste des libertés civiles et des droits fondamentaux dans
+                l’espace numérique.
+              </p>
+              <div class="candidate-links">
+                <span class="tag">Bio</span>
+                <span class="tag">Positions</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="candidate-card">
+            <div class="candidate-photo">
+              <img
+                src="https://images.pexels.com/photos/1181519/pexels-photo-1181519.jpeg?auto=compress&cs=tinysrgb&w=800"
+                alt="Candidate"
+              />
+            </div>
+            <div class="candidate-body">
+              <div class="candidate-name">Candidate 3</div>
+              <div class="candidate-meta">Élections fédérales 2023</div>
+              <p>
+                Engagé·e pour la neutralité du net et un accès ouvert à
+                l’éducation et à la culture.
+              </p>
+              <div class="candidate-links">
+                <span class="tag">Bio</span>
+                <span class="tag">Positions</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="candidate-card">
+            <div class="candidate-photo">
+              <img
+                src="https://images.pexels.com/photos/1181424/pexels-photo-1181424.jpeg?auto=compress&cs=tinysrgb&w=800"
+                alt="Candidate"
+              />
+            </div>
+            <div class="candidate-body">
+              <div class="candidate-name">Candidate 4</div>
+              <div class="candidate-meta">Liste vaudoise</div>
+              <p>
+                Militant·e pour l’open source, les communs numériques et la
+                participation citoyenne.
+              </p>
+              <div class="candidate-links">
+                <span class="tag">Bio</span>
+                <span class="tag">Positions</span>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Events & actions -->
+    <section class="section" id="events">
+      <div class="container actions-grid">
+        <div>
+          <h2 class="section-title">Événements &amp; rencontres</h2>
+          <p class="section-subtitle">
+            Participez aux réunions du comité, aux forums ouverts et aux actions
+            de campagne dans tout le canton de Vaud.
+          </p>
+
+          <div class="event-list">
+            <article class="event-item">
+              <div class="event-date-box"><strong>19</strong> mar</div>
+              <div>
+                <div class="event-content-title">Réunion du comité</div>
+                <div class="event-content-meta">Open Forum, Vaud – 19h30</div>
+              </div>
+              <div class="event-cta">
+                <a href="#">Détails</a>
+              </div>
+            </article>
+
+            <article class="event-item">
+              <div class="event-date-box"><strong>22</strong> mar</div>
+              <div>
+                <div class="event-content-title">
+                  Rencontre avec les candidat·e·s
+                </div>
+                <div class="event-content-meta">Lausanne – dès 18h00</div>
+              </div>
+              <div class="event-cta">
+                <a href="#">Événement</a>
+              </div>
+            </article>
+
+            <article class="event-item">
+              <div class="event-date-box"><strong>02</strong> avr</div>
+              <div>
+                <div class="event-content-title">
+                  Atelier “Vie privée &amp; coopératives”
+                </div>
+                <div class="event-content-meta">Online / Open Forum</div>
+              </div>
+              <div class="event-cta">
+                <a href="#">Infos</a>
+              </div>
+            </article>
+          </div>
+        </div>
+
+        <aside>
+          <h3
+            class="section-title"
+            style="font-size: 20px; margin-bottom: 12px"
+          >
+            Agir maintenant
+          </h3>
+          <div class="actions-cards">
+            <article class="action-card">
+              <div>
+                <div class="action-card-title">Adhérer au parti</div>
+                <div class="action-card-text">
+                  Devenez membre du Parti Pirate Vaud et participez aux
+                  décisions.
+                </div>
+              </div>
+              <a href="#join" class="btn btn-primary">Devenir pirate</a>
+            </article>
+
+            <article class="action-card">
+              <div>
+                <div class="action-card-title">Faire un don</div>
+                <div class="action-card-text">
+                  Soutenez des campagnes indépendantes et financées par les
+                  membres.
+                </div>
+              </div>
+              <a href="#donation" class="btn btn-outline">Donner</a>
+            </article>
+
+            <article class="action-card">
+              <div>
+                <div class="action-card-title">Newsletter</div>
+                <div class="action-card-text">
+                  Recevez les prochaines dates d’actions et les appels à
+                  bénévoles.
+                </div>
+              </div>
+              <a href="#newsletter" class="btn btn-outline">S’inscrire</a>
+            </article>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- Join -->
+    <section class="section join-section" id="join">
+      <div class="container join-inner">
+        <div>
+          <h2 class="section-title">Devenir Pirate</h2>
+          <p class="section-subtitle">
+            En rejoignant le Parti Pirate Vaud, vous participez à un mouvement
+            international qui se bat pour les libertés numériques, la
+            transparence et une démocratie plus directe.
+          </p>
+
+          <p>
+            L’adhésion vous donne accès aux assemblées, groupes de travail,
+            campagnes et outils internes du parti. Vous choisissez votre niveau
+            d’engagement, de simple soutien à candidat·e.
+          </p>
+
+          <div class="join-icons">
+            <div class="join-icon-card">
+              <strong>Adhésion</strong>
+              Cotisation annuelle accessible et adaptée à votre situation.
+            </div>
+            <div class="join-icon-card">
+              <strong>Actions</strong>
+              Participation aux campagnes, stands, débats et ateliers.
+            </div>
+            <div class="join-icon-card">
+              <strong>Réseau</strong>
+              Échanges avec les Pirates en Suisse et à l’international.
+            </div>
+          </div>
+
+          <div style="margin-top: 20px">
+            <a href="#contact" class="btn btn-primary">Demander à adhérer</a>
+            <a href="#newsletter" class="btn btn-outline"
+              >Recevoir d’abord des infos</a
+            >
+          </div>
+        </div>
+
+        <div>
+          <!-- Replace with group volunteer photo -->
+          <img
+            src="https://images.pexels.com/photos/7551434/pexels-photo-7551434.jpeg?auto=compress&cs=tinysrgb&w=800"
+            alt="Bénévoles du Parti Pirate Vaud"
+            style="
+              border-radius: 24px;
+              box-shadow: 0 16px 40px rgba(0, 0, 0, 0.35);
+            "
+          />
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact & newsletter -->
+    <section class="section section--alt" id="contact">
+      <div class="container contact-grid">
+        <div>
+          <h2 class="section-title">Écrivez-nous</h2>
+          <p class="section-subtitle">
+            Une question sur le programme, les élections ou les adhésions ?
+            Contactez directement le comité vaudois via ce formulaire ou les
+            coordonnées ci-dessous.
+          </p>
+
+          <div class="contact-card">
+            <form>
+              <div class="form-row">
+                <div class="form-field">
+                  <label for="name">Nom</label>
+                  <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    placeholder="Votre nom"
+                  />
+                </div>
+                <div class="form-field">
+                  <label for="email">Email</label>
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    placeholder="vous@example.ch"
+                  />
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-field">
+                  <label for="subject">Sujet</label>
+                  <input
+                    type="text"
+                    id="subject"
+                    name="subject"
+                    placeholder="Programme, adhésion, médias…"
+                  />
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-field" style="flex: 1 1 100%">
+                  <label for="message">Message</label>
+                  <textarea
+                    id="message"
+                    name="message"
+                    rows="4"
+                    placeholder="Votre message au Parti Pirate Vaud"
+                  ></textarea>
+                </div>
+              </div>
+
+              <div
+                class="form-row"
+                style="justify-content: space-between; align-items: center"
+              >
+                <div class="form-footnote">
+                  En envoyant ce formulaire, vous acceptez que vos données
+                  soient utilisées uniquement dans le cadre de la prise de
+                  contact.
+                </div>
+                <button type="submit" class="btn btn-primary">Envoyer</button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <aside id="newsletter">
+          <h3
+            class="section-title"
+            style="font-size: 20px; margin-bottom: 12px"
+          >
+            Newsletter &amp; réseaux
+          </h3>
+          <p>
+            Restez informé·e des campagnes, événements et appels à signatures du
+            Parti Pirate Vaud.
+          </p>
+          <form style="margin-top: 16px">
+            <div class="form-field">
+              <label for="newsletter-email">Email</label>
+              <input
+                type="email"
+                id="newsletter-email"
+                placeholder="vous@example.ch"
+              />
+            </div>
+            <button
+              type="submit"
+              class="btn btn-outline"
+              style="margin-top: 12px"
+            >
+              Je m’inscris
+            </button>
+          </form>
+
+          <div style="margin-top: 24px; font-size: 13px">
+            <div style="font-weight: 600; margin-bottom: 6px">
+              Nous suivre en ligne
+            </div>
+            <p>
+              Mastodon, Facebook, Twitter, LinkedIn… retrouvez les liens vers
+              tous nos comptes officiels.
+            </p>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer" id="donation">
+      <div class="container">
+        <div class="footer-top">
+          <div class="footer-contact">
+            <div class="footer-title">Coordonnées bancaires</div>
+            <p>Alternative Bank Switzerland<br />Adresse, CH‑1000 Lausanne</p>
+            <p>IBAN : CH00 0000 0000 0000 0000 0</p>
+            <p>Communication : Don Parti Pirate Vaud</p>
+          </div>
+
+          <div>
+            <div class="footer-title">Nous contacter</div>
+            <p>Email : <a href="mailto:info@ppvd.ch">info@ppvd.ch</a></p>
+            <p>Matrix : @pirate:ppvd.ch</p>
+            <p>Facebook, Mastodon, Twitter : @partipiratevaud</p>
+          </div>
+
+          <div class="footer-donation">
+            <div class="footer-title">Faire un don par QR</div>
+            <div class="footer-qr">
+              <!-- Replace by real QR code image -->
+            </div>
+            <p style="margin-top: 8px">
+              Scannez le code pour un don en ligne rapide et sécurisé.
+            </p>
+          </div>
+        </div>
+
+        <div class="footer-bottom">
+          <div>© Parti Pirate Vaud / HTTPS – Tous droits réservés.</div>
+          <div class="footer-links">
+            <span>Parti Pirate Suisse</span>
+            <span>Parti Pirate International</span>
+            <span>Mentions légales</span>
+            <span>Politique de confidentialité</span>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      // Simple mobile navigation toggle
+      const navToggle = document.getElementById("navToggle");
+      const mainNav = document.getElementById("mainNav");
+
+      if (navToggle && mainNav) {
+        navToggle.addEventListener("click", function () {
+          mainNav.classList.toggle("is-open");
+        });
+      }
+    </script>
+  </body>
+</html>
